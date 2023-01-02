@@ -53,7 +53,9 @@ namespace joaodias_generic_api.Controllers
         //    return NoContent();
         //}
         [AllowAnonymous]
-        public async Task<IActionResult> GetByName(Coins coinsUpdate)
+        [HttpGet]
+        [Route("get-by-name")]
+        public async Task<IActionResult> GetByName(String CoinName)
         {
             var coins = await _genericApiDbContext.Coins.ToListAsync();
             return Ok(coins);
