@@ -26,6 +26,7 @@ namespace joaodias_generic_api.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync(Coins coins)
         {
+
             _genericApiDbContext.Coins.Add(coins);
             await _genericApiDbContext.SaveChangesAsync();
             return Created($"/get-coin-by-id?id={coins.CoinsId}", coins);
@@ -52,6 +53,7 @@ namespace joaodias_generic_api.Controllers
         //    await _genericApiDbContext.SaveChangesAsync();
         //    return NoContent();
         //}
+
         [AllowAnonymous]
         [HttpGet]
         [Route("get-by-name")]
