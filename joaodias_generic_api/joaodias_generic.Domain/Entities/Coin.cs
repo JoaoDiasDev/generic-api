@@ -1,4 +1,6 @@
-﻿namespace joaodias_generic.Domain.Entities
+﻿using joaodias_generic.Domain.Validation;
+
+namespace joaodias_generic.Domain.Entities
 {
     public sealed class Coin : Entity
     {
@@ -32,7 +34,9 @@
             DomainExceptionValidation.When(string.IsNullOrEmpty(name), "Invalid name. Name is required");
             DomainExceptionValidation.When(name.Length < 3, "Invalid name, too short. minimum 3 characters");
             DomainExceptionValidation.When(buyPrice < 0, "Invalid Buy Price value. No Negative values");
+            DomainExceptionValidation.When(buyPrice > 99999.99M, "Invalid Buy Price value. Maximum Buy Price is 99999.99");
             DomainExceptionValidation.When(sellPrice < 0, "Invalid Sell Price value. No Negative values");
+            DomainExceptionValidation.When(sellPrice > 99999.99M, "Invalid Sell Price value. Maximum Sell Price is 99999.99");
 
             Name = name;
             BuyPrice = buyPrice;

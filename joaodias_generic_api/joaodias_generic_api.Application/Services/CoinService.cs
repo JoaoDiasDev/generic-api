@@ -49,12 +49,12 @@ namespace joaodias_generic.Application.Services
 
         public async Task<CoinDTO> GetByName(string? name)
         {
-            var coinByIdQuery = new GetCoinByNameQuery(name.Value);
+            var coinByNameQuery = new GetCoinByNameQuery(name);
 
-            if (coinByIdQuery == null)
+            if (coinByNameQuery == null)
                 throw new Exception($"Entity could not be loaded.");
 
-            var result = await _mediator.Send(coinByIdQuery);
+            var result = await _mediator.Send(coinByNameQuery);
 
             return _mapper.Map<CoinDTO>(result);
         }

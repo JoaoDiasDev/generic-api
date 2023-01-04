@@ -8,11 +8,6 @@ namespace joaodias_generic.Infra.Data.Identity
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SeedUserRoleInitial"/> class.
-        /// </summary>
-        /// <param name="roleManager">The role manager.</param>
-        /// <param name="userManager">The user manager.</param>
         public SeedUserRoleInitial(RoleManager<IdentityRole> roleManager,
               UserManager<ApplicationUser> userManager)
         {
@@ -20,9 +15,6 @@ namespace joaodias_generic.Infra.Data.Identity
             _userManager = userManager;
         }
 
-        /// <summary>
-        /// Seeds the users.
-        /// </summary>
         public void SeedUsers()
         {
             if (_userManager.FindByEmailAsync("usuario@localhost").Result == null)
@@ -64,10 +56,6 @@ namespace joaodias_generic.Infra.Data.Identity
             }
 
         }
-
-        /// <summary>
-        /// Seeds the roles.
-        /// </summary>
         public void SeedRoles()
         {
             if (!_roleManager.RoleExistsAsync("User").Result)

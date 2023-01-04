@@ -1,45 +1,34 @@
 ﻿using joaodias_generic.Application.Coins.Commands;
+using joaodias_generic.Domain.Entities;
+using joaodias_generic.Domain.Interfaces;
 using MediatR;
 
 namespace joaodias_generic.Application.Coins.Handlers
 {
-    /// <summary>
-    /// The product update command handler.
-    /// </summary>
-    public class CoinUpdateCommandHandler : IRequestHandler<CoinUpdateCommand, Product>
+    public class CoinUpdateCommandHandler : IRequestHandler<CoinUpdateCommand, Coin>
     {
-        private readonly IProductRepository _productRepository;
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CoinUpdateCommandHandler"/> class.
-        /// </summary>
-        /// <param name="productRepository">The product repository.</param>
-        public CoinUpdateCommandHandler(IProductRepository productRepository)
+        private readonly ICoinRepository _coinRepository;
+
+        public CoinUpdateCommandHandler(ICoinRepository coinRepository)
         {
-            _productRepository = productRepository ??
-            throw new ArgumentNullException(nameof(productRepository));
+            _coinRepository = coinRepository ??
+            throw new ArgumentNullException(nameof(coinRepository));
         }
 
-        /// <summary>
-        /// Handles the.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A Task.</returns>
-        public async Task<Product> Handle(CoinUpdateCommand request,
+        public async Task<Coin> Handle(CoinUpdateCommand request,
             CancellationToken cancellationToken)
         {
-            var product = await _productRepository.GetByIdAsync(request.Id);
+            var coin = await _coinRepository.GetByIdAsync(request.Id);
 
-            if (product == null)
+            if (coin == null)
             {
                 throw new ApplicationException($"Entity could not be found.");
             }
             else
             {
-                product.Update(request.Name, request.Description, request.Price,
-                                request.Stock, request.Image, request.CategoryId);
+                coin.Update(request.Name, request.BuyPrice, request.SellPrice, request.Variation);
 
-                return await _productRepository.UpdateAsync(product);
+                return await _coinRepository.UpdateAsync(coin);
 
             }
         }

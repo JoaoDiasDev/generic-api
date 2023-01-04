@@ -3,9 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace joaodias_generic.Application.DTOs
 {
-    /// <summary>
-    /// The category d t o.
-    /// </summary>
+
     public class CoinDTO
     {
         public int Id { get; set; }

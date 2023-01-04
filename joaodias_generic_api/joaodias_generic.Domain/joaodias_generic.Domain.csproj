@@ -6,9 +6,4 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="PostSharp.Patterns.Diagnostics" Version="6.10.9" />
-	</ItemGroup>
-
-
 </Project>

@@ -1,4 +1,4 @@
-﻿using joaodias_generic_api.Data.Entities;
+﻿using joaodias_generic.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,4 +1,6 @@
-﻿using joaodias_generic.Application.Mappings;
+﻿using joaodias_generic.Application.Interfaces;
+using joaodias_generic.Application.Mappings;
+using joaodias_generic.Application.Services;
 using joaodias_generic.Domain.Account;
 using joaodias_generic.Domain.Interfaces;
 using joaodias_generic.Infra.Data.Context;
@@ -22,13 +24,15 @@ namespace joaodias_generic.Infra.IoC
              options.UseMySql(connectionString
             , ServerVersion.AutoDetect(connectionString), b => b.MigrationsAssembly(typeof(GenericApiDbContext).Assembly.FullName)));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(opt => opt.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<GenericApiDbContext>()
                 .AddDefaultTokenProviders();
 
             services.AddScoped<ICoinRepository, CoinRepository>();
+            services.AddScoped<ICoinService, CoinService>();
 
             services.AddScoped<IAuthenticate, AuthenticateService>();
+            services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
 
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 

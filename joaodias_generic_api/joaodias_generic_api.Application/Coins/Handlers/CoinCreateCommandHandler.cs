@@ -5,9 +5,6 @@ using MediatR;
 
 namespace joaodias_generic.Application.Coins.Handlers
 {
-    /// <summary>
-    /// The product create command handler.
-    /// </summary>
     public class CoinCreateCommandHandler : IRequestHandler<CoinCreateCommand, Coin>
     {
         private readonly ICoinRepository _coinRepository;
@@ -20,17 +17,16 @@ namespace joaodias_generic.Application.Coins.Handlers
         public Task<Coin> Handle(CoinCreateCommand request,
             CancellationToken cancellationToken)
         {
-            var product = new Coin(request.Name, request.Description, request.Price,
-                              request.Stock, request.Image);
+            var coin = new Coin(request.Name, request.BuyPrice, request.SellPrice, request.Variation);
 
-            if (product == null)
+            if (coin == null)
             {
                 throw new ApplicationException($"Error creating entity.");
             }
             else
             {
-                product.CategoryId = request.CategoryId;
-                return _coinRepository.CreateAsync(product);
+                //coin.RelationId = request.RelationId; // if have any relation get the id here from the request
+                return _coinRepository.CreateAsync(coin);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using joaodias_generic.Domain.Account;
+using Microsoft.AspNetCore.Identity;
 
 namespace joaodias_generic.Infra.Data.Identity
 {
@@ -7,23 +8,13 @@ namespace joaodias_generic.Infra.Data.Identity
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AuthenticateService"/> class.
-        /// </summary>
-        /// <param name="userManager">The user manager.</param>
-        /// <param name="signInManager">The sign in manager.</param>
+
         public AuthenticateService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
         }
 
-        /// <summary>
-        /// Authenticates the.
-        /// </summary>
-        /// <param name="email">The email.</param>
-        /// <param name="password">The password.</param>
-        /// <returns>A Task.</returns>
         public async Task<bool> Authenticate(string email, string password)
         {
             var result = await _signInManager.PasswordSignInAsync(email, password, false, lockoutOnFailure: false);
@@ -32,21 +23,12 @@ namespace joaodias_generic.Infra.Data.Identity
 
         }
 
-        /// <summary>
-        /// Logouts the.
-        /// </summary>
-        /// <returns>A Task.</returns>
         public async Task Logout()
         {
             await _signInManager.SignOutAsync();
         }
 
-        /// <summary>
-        /// Registers the user.
-        /// </summary>
-        /// <param name="email">The email.</param>
-        /// <param name="password">The password.</param>
-        /// <returns>A Task.</returns>
+
         public async Task<bool> RegisterUser(string email, string password)
         {
             var applicationUser = new ApplicationUser

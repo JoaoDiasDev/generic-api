@@ -1,42 +1,33 @@
 ﻿using joaodias_generic.Application.Coins.Commands;
+using joaodias_generic.Domain.Entities;
+using joaodias_generic.Domain.Interfaces;
 using MediatR;
 
 namespace joaodias_generic.Application.Coins.Handlers
 {
-    /// <summary>
-    /// The product remove command handler.
-    /// </summary>
-    public class CoinRemoveCommandHandler : IRequestHandler<CoinRemoveCommand, Product>
+
+    public class CoinRemoveCommandHandler : IRequestHandler<CoinRemoveCommand, Coin>
     {
-        private readonly IProductRepository _productRepository;
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CoinRemoveCommandHandler"/> class.
-        /// </summary>
-        /// <param name="productRepository">The product repository.</param>
-        public CoinRemoveCommandHandler(IProductRepository productRepository)
+        private readonly ICoinRepository _coinRepository;
+
+        public CoinRemoveCommandHandler(ICoinRepository coinRepository)
         {
-            _productRepository = productRepository ?? throw new
-                ArgumentNullException(nameof(productRepository));
+            _coinRepository = coinRepository ?? throw new
+                ArgumentNullException(nameof(coinRepository));
         }
 
-        /// <summary>
-        /// Handles the.
-        /// </summary>
-        /// <param name="request">The request.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A Task.</returns>
-        public async Task<Product> Handle(CoinRemoveCommand request,
+        public async Task<Coin> Handle(CoinRemoveCommand request,
             CancellationToken cancellationToken)
         {
-            var product = await _productRepository.GetByIdAsync(request.Id);
+            var coin = await _coinRepository.GetByIdAsync(request.Id);
 
-            if (product == null)
+            if (coin == null)
             {
                 throw new ApplicationException($"Entity could not be found.");
             }
             else
             {
-                var result = await _productRepository.RemoveAsync(product);
+                var result = await _coinRepository.RemoveAsync(coin);
                 return result;
             }
         }

@@ -2,7 +2,6 @@
 using joaodias_generic.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace joaodias_generic.Api.Controllers
 {
@@ -38,6 +37,7 @@ namespace joaodias_generic.Api.Controllers
             return Ok(coin);
         }
 
+        [AllowAnonymous]
         [HttpGet("{name}", Name = "GetCoinByName")]
         public async Task<ActionResult<CoinDTO>> Get(string name)
         {
@@ -50,43 +50,47 @@ namespace joaodias_generic.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync(Coin coins)
+        public async Task<IActionResult> Post([FromBody] CoinDTO coinDTO)
         {
 
-            _coinService.Coins.Add(coins);
-            await _coinService.SaveChangesAsync();
-            return Created($"/get-coin-by-id?id={coins.CoinsId}", coins);
+            if (coinDTO == null)
+                return BadRequest("Data Invalid");
+
+            await _coinService.Add(coinDTO);
+
+            return new CreatedAtRouteResult("GetCoin",
+                new { id = coinDTO.Id }, coinDTO);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> PutAsync(Coin coinsUpdate)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] CoinDTO coinDTO)
         {
-            _coinService.Coins.Update(coinsUpdate);
-            await _coinService.SaveChangesAsync();
-            return NoContent();
+            if (id != coinDTO.Id)
+            {
+                return BadRequest("Data invalid");
+            }
+
+            if (coinDTO == null)
+                return BadRequest("Data invalid");
+
+            await _coinService.Update(coinDTO);
+
+            return Ok(coinDTO);
         }
 
-        //[Route("{id}")]
-        //[HttpDelete]
-        //public async Task<IActionResult> DeleteAsync(int id)
-        //{
-        //    var coinToDelete = await _coinService.Coins.FindAsync(id);
-        //    if (coinToDelete == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    _coinService.Coins.Remove(coinToDelete);
-        //    await _coinService.SaveChangesAsync();
-        //    return NoContent();
-        //}
-
-        [AllowAnonymous]
-        [HttpGet]
-        [Route("get-by-name")]
-        public async Task<IActionResult> GetByName(string CoinName)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<CoinDTO>> Delete(int id)
         {
-            var coins = await _coinService.Coins.ToListAsync();
-            return Ok(coins);
+            var produtoDto = await _coinService.GetById(id);
+
+            if (produtoDto == null)
+            {
+                return NotFound("Coin not found");
+            }
+
+            await _coinService.Remove(id);
+
+            return Ok(produtoDto);
         }
     }
 }

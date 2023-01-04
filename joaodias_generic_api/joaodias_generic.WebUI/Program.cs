@@ -8,12 +8,7 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 builder.Services.AddControllersWithViews();
 
-
-
 var app = builder.Build();
-
-
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

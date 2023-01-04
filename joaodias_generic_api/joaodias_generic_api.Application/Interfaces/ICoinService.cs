@@ -2,9 +2,7 @@
 
 namespace joaodias_generic.Application.Interfaces
 {
-    /// <summary>
-    /// The category service.
-    /// </summary>
+
     public interface ICoinService
     {
 

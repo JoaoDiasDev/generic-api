@@ -29,7 +29,7 @@ namespace joaodias_generic.Api.Controllers
 
 
         [HttpPost("CreateUser")]
-        [ApiExplorerSettings(IgnoreApi = true)]
+        //[ApiExplorerSettings(IgnoreApi = true)]
         [Authorize]
         public async Task<ActionResult> CreateUser([FromBody] LoginModel userInfo)
         {

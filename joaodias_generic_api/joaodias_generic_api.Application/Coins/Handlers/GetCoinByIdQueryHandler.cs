@@ -5,9 +5,7 @@ using MediatR;
 
 namespace joaodias_generic.Application.Coins.Handlers
 {
-    /// <summary>
-    /// The get product by id query handler.
-    /// </summary>
+
     public class GetCoinByIdQueryHandler : IRequestHandler<GetCoinByIdQuery, Coin>
     {
         private readonly ICoinRepository _coinRepository;
@@ -17,11 +15,11 @@ namespace joaodias_generic.Application.Coins.Handlers
             _coinRepository = coinRepository;
         }
 
-
         public Task<Coin> Handle(GetCoinByIdQuery request,
              CancellationToken cancellationToken)
         {
             return _coinRepository.GetByIdAsync(request.Id);
         }
+
     }
 }

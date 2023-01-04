@@ -10,20 +10,13 @@ namespace joaodias_generic.WebUI.Controllers
     public class AccountController : Controller
     {
         private readonly IAuthenticate _authentication;
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AccountController"/> class.
-        /// </summary>
-        /// <param name="authentication">The authentication.</param>
+
         public AccountController(IAuthenticate authentication)
         {
             _authentication = authentication;
         }
 
-        /// <summary>
-        /// Logins the.
-        /// </summary>
-        /// <param name="returnUrl">The return url.</param>
-        /// <returns>An IActionResult.</returns>
+
         [HttpGet]
         public IActionResult Login(string returnUrl)
         {
@@ -33,15 +26,11 @@ namespace joaodias_generic.WebUI.Controllers
             });
         }
 
-        /// <summary>
-        /// Logins the.
-        /// </summary>
-        /// <param name="model">The model.</param>
-        /// <returns>A Task.</returns>
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            var result = await _authentication.Authenticate(model.Email, model.Password);
+            var result = await _authentication.Authenticate(model.UserName, model.Password);
 
             if (result)
             {
@@ -58,25 +47,18 @@ namespace joaodias_generic.WebUI.Controllers
             }
         }
 
-        /// <summary>
-        /// Registers the.
-        /// </summary>
-        /// <returns>An IActionResult.</returns>
+
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
-        /// <summary>
-        /// Registers the.
-        /// </summary>
-        /// <param name="model">The model.</param>
-        /// <returns>A Task.</returns>
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            var result = await _authentication.RegisterUser(model.Email, model.Password);
+            var result = await _authentication.RegisterUser(email: model.Email, password: model.Password);
 
             if (result)
             {
@@ -89,10 +71,7 @@ namespace joaodias_generic.WebUI.Controllers
             }
         }
 
-        /// <summary>
-        /// Logouts the.
-        /// </summary>
-        /// <returns>A Task.</returns>
+
         public async Task<IActionResult> Logout()
         {
             await _authentication.Logout();

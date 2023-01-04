@@ -5,20 +5,21 @@ using MediatR;
 
 namespace joaodias_generic.Application.Coins.Handlers
 {
-    public class GetCoinsQueryHandler : IRequestHandler<GetCoinsQuery, IEnumerable<Coin>>
+
+    public class GetCoinByNameQueryHandler : IRequestHandler<GetCoinByNameQuery, Coin>
     {
         private readonly ICoinRepository _coinRepository;
 
-        public GetCoinsQueryHandler(ICoinRepository coinRepository)
+        public GetCoinByNameQueryHandler(ICoinRepository coinRepository)
         {
             _coinRepository = coinRepository;
         }
 
 
-        public Task<IEnumerable<Coin>> Handle(GetCoinsQuery request,
-            CancellationToken cancellationToken)
+        public Task<Coin> Handle(GetCoinByNameQuery request,
+             CancellationToken cancellationToken)
         {
-            return _coinRepository.GetCoinsAsync();
+            return _coinRepository.GetByNameAsync(request.Name);
         }
     }
 }

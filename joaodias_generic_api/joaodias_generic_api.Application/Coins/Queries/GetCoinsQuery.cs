@@ -1,11 +1,10 @@
-﻿using MediatR;
+﻿using joaodias_generic.Domain.Entities;
+using MediatR;
 
 namespace joaodias_generic.Application.Coins.Queries
 {
-    /// <summary>
-    /// The get products query.
-    /// </summary>
-    public class GetCoinsQuery : IRequest<IEnumerable<Product>>
+
+    public class GetCoinsQuery : IRequest<IEnumerable<Coin>>
     {
     }
 }

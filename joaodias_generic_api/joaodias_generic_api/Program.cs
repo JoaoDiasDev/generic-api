@@ -1,18 +1,17 @@
 using joaodias_generic.Infra.Data.Context;
+using joaodias_generic.Infra.IoC;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Add services to the container
+builder.Services.AddInfrastructureAPI(builder.Configuration);
+builder.Services.AddInfrastructureJWT(builder.Configuration);
+builder.Services.AddInfrastructureSwagger();
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Generic API JoaoDias", Version = "v1" });
-});
 
 var connectionString = builder.Configuration.GetConnectionString("GenericApiDbConnection");
 
