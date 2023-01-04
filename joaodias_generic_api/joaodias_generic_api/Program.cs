@@ -40,4 +40,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<GenericApiDbContext>();
+    db.Database.Migrate();
+}
+
+
 app.Run();

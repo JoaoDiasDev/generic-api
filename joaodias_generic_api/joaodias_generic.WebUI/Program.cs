@@ -1,5 +1,4 @@
 using joaodias_generic.Application.Mappings;
-using joaodias_generic.Infra.Data.Identity;
 using joaodias_generic.Infra.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +8,12 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 builder.Services.AddControllersWithViews();
 
+
+
 var app = builder.Build();
+
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -28,8 +32,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-SeedUserRoleInitial.SeedRoles();
-SeedUserRoleInitial.SeedUsers();
+
 
 app.UseAuthentication();
 
@@ -38,5 +41,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
 
 app.Run();

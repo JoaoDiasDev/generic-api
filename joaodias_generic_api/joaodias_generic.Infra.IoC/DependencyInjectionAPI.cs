@@ -1,4 +1,9 @@
-﻿using joaodias_generic.Infra.Data.Context;
+﻿using joaodias_generic.Application.Mappings;
+using joaodias_generic.Domain.Account;
+using joaodias_generic.Domain.Interfaces;
+using joaodias_generic.Infra.Data.Context;
+using joaodias_generic.Infra.Data.Identity;
+using joaodias_generic.Infra.Data.Repositories;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
