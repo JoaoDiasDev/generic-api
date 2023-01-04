@@ -1,19 +1,20 @@
-﻿using joaodias_generic_api.Data;
-using joaodias_generic_api.Data.Entities;
-using joaodias_generic_api.Integrations.Hgbrasil.Finance;
+﻿using joaodias_generic.Application.DTOs;
+using joaodias_generic.Application.Interfaces;
+using joaodias_generic.Integrations.Hgbrasil.Finance;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace joaodias_generic_api.Controllers
+namespace joaodias_generic.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class HgBrasilController : Controller
     {
-        private readonly GenericApiDbContext _genericApiDbContext;
-        public HgBrasilController(GenericApiDbContext genericApiDbContext)
+        private readonly ICoinService _coinService;
+
+        public HgBrasilController(ICoinService coinService)
         {
-            _genericApiDbContext = genericApiDbContext;
+            _coinService = coinService;
         }
 
         [HttpGet]
@@ -112,15 +113,17 @@ namespace joaodias_generic_api.Controllers
 
             foreach (var genericCoin in genericCoins)
             {
-                var coin = new Coins()
+
+
+                var coin = new CoinDTO
                 {
                     BuyPrice = genericCoin?.Buy != null ? decimal.Parse(genericCoin?.Buy.ToString()) : 0,
                     SellPrice = genericCoin?.Sell != null ? decimal.Parse(genericCoin?.Sell.ToString()) : 0,
-                    CoinName = genericCoin?.Name ?? string.Empty,
-                    Variation = genericCoin?.Variation != null ? decimal.Parse(genericCoin?.Variation.ToString()) : 0
+                    Name = genericCoin?.Name ?? string.Empty,
+                    Variation = genericCoin?.Variation != null ? decimal.Parse(genericCoin?.Variation.ToString()) : 0,
                 };
 
-                await new CoinsController(_genericApiDbContext).PostAsync(coin);
+                await _coinService.Add(coin);
 
             }
         }

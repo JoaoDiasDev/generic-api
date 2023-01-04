@@ -1,4 +1,4 @@
-using joaodias_generic_api.Data;
+using joaodias_generic.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 

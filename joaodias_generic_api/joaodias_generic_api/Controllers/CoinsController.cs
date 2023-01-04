@@ -1,42 +1,68 @@
-﻿using joaodias_generic_api.Data;
-using joaodias_generic_api.Data.Entities;
+﻿using joaodias_generic.Application.DTOs;
+using joaodias_generic.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace joaodias_generic_api.Controllers
+namespace joaodias_generic.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CoinsController : ControllerBase
     {
-        private readonly GenericApiDbContext _genericApiDbContext;
-        public CoinsController(GenericApiDbContext genericApiDbContext)
+        private readonly ICoinService _coinService;
+        public CoinsController(ICoinService coinService)
         {
-            _genericApiDbContext = genericApiDbContext;
+            _coinService = coinService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAsync()
+        public async Task<ActionResult<IEnumerable<CoinDTO>>> Get()
         {
-            var coins = await _genericApiDbContext.Coins.ToListAsync();
+            var coins = await _coinService.GetCoins();
+            if (coins == null)
+            {
+                return NotFound("Coins not found");
+            }
             return Ok(coins);
         }
 
+        [HttpGet("{id}", Name = "GetCoinById")]
+        public async Task<ActionResult<CoinDTO>> Get(int id)
+        {
+            var coin = await _coinService.GetById(id);
+            if (coin == null)
+            {
+                return NotFound("Coin not found");
+            }
+            return Ok(coin);
+        }
+
+        [HttpGet("{name}", Name = "GetCoinByName")]
+        public async Task<ActionResult<CoinDTO>> Get(string name)
+        {
+            var coin = await _coinService.GetByName(name);
+            if (coin == null)
+            {
+                return NotFound("Coin not found");
+            }
+            return Ok(coin);
+        }
+
         [HttpPost]
-        public async Task<IActionResult> PostAsync(Coins coins)
+        public async Task<IActionResult> PostAsync(Coin coins)
         {
 
-            _genericApiDbContext.Coins.Add(coins);
-            await _genericApiDbContext.SaveChangesAsync();
+            _coinService.Coins.Add(coins);
+            await _coinService.SaveChangesAsync();
             return Created($"/get-coin-by-id?id={coins.CoinsId}", coins);
         }
 
         [HttpPut]
-        public async Task<IActionResult> PutAsync(Coins coinsUpdate)
+        public async Task<IActionResult> PutAsync(Coin coinsUpdate)
         {
-            _genericApiDbContext.Coins.Update(coinsUpdate);
-            await _genericApiDbContext.SaveChangesAsync();
+            _coinService.Coins.Update(coinsUpdate);
+            await _coinService.SaveChangesAsync();
             return NoContent();
         }
 
@@ -44,22 +70,22 @@ namespace joaodias_generic_api.Controllers
         //[HttpDelete]
         //public async Task<IActionResult> DeleteAsync(int id)
         //{
-        //    var coinToDelete = await _genericApiDbContext.Coins.FindAsync(id);
+        //    var coinToDelete = await _coinService.Coins.FindAsync(id);
         //    if (coinToDelete == null)
         //    {
         //        return NotFound();
         //    }
-        //    _genericApiDbContext.Coins.Remove(coinToDelete);
-        //    await _genericApiDbContext.SaveChangesAsync();
+        //    _coinService.Coins.Remove(coinToDelete);
+        //    await _coinService.SaveChangesAsync();
         //    return NoContent();
         //}
 
         [AllowAnonymous]
         [HttpGet]
         [Route("get-by-name")]
-        public async Task<IActionResult> GetByName(String CoinName)
+        public async Task<IActionResult> GetByName(string CoinName)
         {
-            var coins = await _genericApiDbContext.Coins.ToListAsync();
+            var coins = await _coinService.Coins.ToListAsync();
             return Ok(coins);
         }
     }
