@@ -11,8 +11,8 @@ using joaodias_generic.Infra.Data.Context;
 namespace joaodiasgeneric.Infra.Data.Migrations
 {
     [DbContext(typeof(GenericApiDbContext))]
-    [Migration("20230104173556_Initial")]
-    partial class Initial
+    [Migration("20230105044109_Seed_Idendity")]
+    partial class SeedIdendity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,20 +46,6 @@ namespace joaodiasgeneric.Infra.Data.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "bf865b82-b6cc-4bd8-b02c-528291391b07",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        },
-                        new
-                        {
-                            Id = "5d42dcfd-d6e5-4dbd-98f5-deb8400a5b07",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -143,18 +129,6 @@ namespace joaodiasgeneric.Infra.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "9b1298f7-3a0d-4a0f-95fc-9090530cb5ff",
-                            RoleId = "5d42dcfd-d6e5-4dbd-98f5-deb8400a5b07"
-                        },
-                        new
-                        {
-                            UserId = "35bcf47f-d38b-46af-aeae-b48c021dc88a",
-                            RoleId = "bf865b82-b6cc-4bd8-b02c-528291391b07"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -196,7 +170,8 @@ namespace joaodiasgeneric.Infra.Data.Migrations
                         .HasColumnType("decimal(10,2)");
 
                     b.Property<decimal>("Variation")
-                        .HasColumnType("decimal(65,30)");
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.HasKey("Id");
 
@@ -265,40 +240,6 @@ namespace joaodiasgeneric.Infra.Data.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "9b1298f7-3a0d-4a0f-95fc-9090530cb5ff",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "5948ff65-6b53-4b42-9800-629ca052c52c",
-                            Email = "usuario@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "USUARIO@GMAIL.COM",
-                            NormalizedUserName = "USUARIO@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBjYBl5QrySAH2rp/Uof3vvLArxySnIo1/39mMCw43/TZzYQiCynxvVVm4rya7A22w==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "82fcd2e4-98d3-4d1a-badd-cb4f49d1b163",
-                            TwoFactorEnabled = false,
-                            UserName = "usuario@gmail.com"
-                        },
-                        new
-                        {
-                            Id = "35bcf47f-d38b-46af-aeae-b48c021dc88a",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "43a3218b-657b-4295-9c8d-8522d9ba3e86",
-                            Email = "admin@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@GMAIL.COM",
-                            NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHLzbOUEx8DQEvtFwmtYPewLMEF6gfE9TKOo82jxE/E75uRCkIoHis50zcg2EB2v1Q==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "ab965aa8-bbbd-40b3-a6cd-b9420dbf002e",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@gmail.com"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -6,8 +6,8 @@ using Newtonsoft.Json;
 
 namespace joaodias_generic.Api.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class HgBrasilController : Controller
     {
         private readonly ICoinService _coinService;

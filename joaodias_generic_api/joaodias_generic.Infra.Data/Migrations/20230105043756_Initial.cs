@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace joaodiasgeneric.Infra.Data.Migrations
 {
     /// <inheritdoc />
@@ -81,7 +79,7 @@ namespace joaodiasgeneric.Infra.Data.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     BuyPrice = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     SellPrice = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    Variation = table.Column<decimal>(type: "decimal(65,30)", nullable: false)
+                    Variation = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -215,33 +213,6 @@ namespace joaodiasgeneric.Infra.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { "5d42dcfd-d6e5-4dbd-98f5-deb8400a5b07", null, "Admin", "ADMIN" },
-                    { "bf865b82-b6cc-4bd8-b02c-528291391b07", null, "User", "USER" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[,]
-                {
-                    { "35bcf47f-d38b-46af-aeae-b48c021dc88a", 0, "43a3218b-657b-4295-9c8d-8522d9ba3e86", "admin@gmail.com", true, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEHLzbOUEx8DQEvtFwmtYPewLMEF6gfE9TKOo82jxE/E75uRCkIoHis50zcg2EB2v1Q==", null, false, "ab965aa8-bbbd-40b3-a6cd-b9420dbf002e", false, "admin@gmail.com" },
-                    { "9b1298f7-3a0d-4a0f-95fc-9090530cb5ff", 0, "5948ff65-6b53-4b42-9800-629ca052c52c", "usuario@gmail.com", true, false, null, "USUARIO@GMAIL.COM", "USUARIO@GMAIL.COM", "AQAAAAIAAYagAAAAEBjYBl5QrySAH2rp/Uof3vvLArxySnIo1/39mMCw43/TZzYQiCynxvVVm4rya7A22w==", null, false, "82fcd2e4-98d3-4d1a-badd-cb4f49d1b163", false, "usuario@gmail.com" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "RoleId", "UserId" },
-                values: new object[,]
-                {
-                    { "bf865b82-b6cc-4bd8-b02c-528291391b07", "35bcf47f-d38b-46af-aeae-b48c021dc88a" },
-                    { "5d42dcfd-d6e5-4dbd-98f5-deb8400a5b07", "9b1298f7-3a0d-4a0f-95fc-9090530cb5ff" }
-                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

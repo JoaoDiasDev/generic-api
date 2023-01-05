@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using joaodias_generic.Infra.Data.Context;
 
@@ -10,9 +11,11 @@ using joaodias_generic.Infra.Data.Context;
 namespace joaodiasgeneric.Infra.Data.Migrations
 {
     [DbContext(typeof(GenericApiDbContext))]
-    partial class GenericApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230105043756_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,7 +175,7 @@ namespace joaodiasgeneric.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Coins", (string)null);
+                    b.ToTable("Coins");
                 });
 
             modelBuilder.Entity("joaodias_generic.Infra.Data.Identity.ApplicationUser", b =>

@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace joaodias_generic.Api.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class CoinController : ControllerBase
     {
         private readonly ICoinService _coinService;

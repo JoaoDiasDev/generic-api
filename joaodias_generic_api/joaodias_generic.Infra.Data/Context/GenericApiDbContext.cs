@@ -17,7 +17,7 @@ namespace joaodias_generic.Infra.Data.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.SeedIdendity();
+            //builder.SeedIdendity(); //Used to create migration Seed
             builder.ApplyConfigurationsFromAssembly(typeof(GenericApiDbContext).Assembly);
         }
     }

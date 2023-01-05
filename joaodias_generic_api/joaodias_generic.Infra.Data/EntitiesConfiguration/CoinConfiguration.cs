@@ -11,6 +11,7 @@ namespace joaodias_generic.Infra.Data.EntitiesConfiguration
             builder.HasKey(t => t.Id);
             builder.Property(p => p.SellPrice).HasPrecision(10, 2).IsRequired();
             builder.Property(p => p.BuyPrice).HasPrecision(10, 2).IsRequired();
+            builder.Property(p => p.Variation).HasPrecision(10, 2);
             builder.Property(p => p.Name).HasMaxLength(100).IsRequired();
         }
     }
