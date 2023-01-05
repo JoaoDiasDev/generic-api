@@ -19,8 +19,8 @@ builder.Services.AddCors(builder =>
     {
         policy.WithOrigins("http://localhost:61960",
             "https://localhost:61960",
-            "https://joaodiasdev.github.io/",
-            "https://joaodiasdev.github.io/",
+            "https://joaodiasdev.github.io",
+            "https://joaodiasdev.github.io",
             "http://localhost",
             "https://localhost",
             "https://localhost:5556",
@@ -66,8 +66,8 @@ app.UseCors(builder =>
 {
     builder.WithOrigins("http://localhost:61960",
        "https://localhost:61960",
-       "https://joaodiasdev.github.io/",
-       "https://joaodiasdev.github.io/",
+       "https://joaodiasdev.github.io",
+       "https://joaodiasdev.github.io",
        "https://localhost:5556",
        "http://localhost:5555",
        "http://localhost:7251",
