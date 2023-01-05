@@ -47,18 +47,6 @@ namespace joaodias_generic.Application.Services
             return _mapper.Map<CoinDTO>(result);
         }
 
-        public async Task<CoinDTO> GetByName(string? name)
-        {
-            var coinByNameQuery = new GetCoinByNameQuery(name);
-
-            if (coinByNameQuery == null)
-                throw new Exception($"Entity could not be loaded.");
-
-            var result = await _mediator.Send(coinByNameQuery);
-
-            return _mapper.Map<CoinDTO>(result);
-        }
-
         public async Task Add(CoinDTO coinDto)
         {
             var coinCreateCommand = _mapper.Map<CoinCreateCommand>(coinDto);

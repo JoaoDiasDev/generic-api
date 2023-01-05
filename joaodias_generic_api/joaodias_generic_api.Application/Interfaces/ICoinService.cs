@@ -9,8 +9,6 @@ namespace joaodias_generic.Application.Interfaces
         Task<IEnumerable<CoinDTO>> GetCoins();
 
         Task<CoinDTO> GetById(int? id);
-        Task<CoinDTO> GetByName(string? name);
-
         Task Add(CoinDTO coinDto);
 
         Task Update(CoinDTO coinDto);
