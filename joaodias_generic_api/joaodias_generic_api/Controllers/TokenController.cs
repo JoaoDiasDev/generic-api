@@ -28,9 +28,8 @@ namespace joaodias_generic.Api.Controllers
         }
 
 
-        [HttpPost("CreateUser")]
-        //[ApiExplorerSettings(IgnoreApi = true)]
         [Authorize]
+        [HttpPost("CreateUser")]
         public async Task<ActionResult> CreateUser([FromBody] LoginModel userInfo)
         {
             var result = await _authentication.RegisterUser(userInfo.Email, userInfo.Password);

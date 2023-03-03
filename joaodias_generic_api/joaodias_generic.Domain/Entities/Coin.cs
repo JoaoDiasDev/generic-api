@@ -4,7 +4,7 @@ namespace joaodias_generic.Domain.Entities
 {
     public sealed class Coin : Entity
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public decimal BuyPrice { get; set; }
         public decimal SellPrice { get; set; }
         public decimal Variation { get; set; }
