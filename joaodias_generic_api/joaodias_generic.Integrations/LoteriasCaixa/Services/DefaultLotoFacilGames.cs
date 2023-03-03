@@ -1,6 +1,6 @@
 ﻿using joaodias_generic.Integrations.LoteriasCaixa.DTO;
 
-namespace joaodias_generic.Integrations.LoteriasCaixa.Structs
+namespace joaodias_generic.Integrations.LoteriasCaixa.Services
 {
     public static class DefaultLotoFacilGames
     {
