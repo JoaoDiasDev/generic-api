@@ -46,5 +46,6 @@ namespace joaodias_generic.Infra.IoC
 
             return services;
         }
+
     }
 }

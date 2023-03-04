@@ -18,7 +18,7 @@ namespace joaodias_generic.WebUI.Controllers
 
 
         [HttpGet]
-        public IActionResult Login(string returnUrl)
+        public IActionResult Login(string? returnUrl)
         {
             return View(new LoginViewModel()
             {
@@ -30,6 +30,7 @@ namespace joaodias_generic.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
+            model.UserName = model.Email;
             var result = await _authentication.Authenticate(model.UserName, model.Password);
 
             if (result)

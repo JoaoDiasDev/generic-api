@@ -1,4 +1,4 @@
-﻿@model             LoginViewModel
+﻿@model LoginViewModel
 
 <h2>Log In</h2>
 
@@ -7,7 +7,7 @@
 
         <form asp-controller="Account" asp-action="Login" method="post" class="form-horizontal">
 
-            <input type="hidden" asp-for="ReturnUrl" />
+            <input type="hidden" asp-for="ReturnUrl"/>
 
             <div asp-validation-summary="All" class="text-danger">
             </div>
@@ -43,10 +43,11 @@
         </form>
     </div>
 </div>
+
 @section Scripts {
     @{
 
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
 
-}
+    }
 }

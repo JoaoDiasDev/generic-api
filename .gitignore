@@ -348,3 +348,6 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Ignoring Emails Credentials file, create one EmailsCredentials.json with your password and email on Email Integration folder. Read the class to understand.
+joaodias_generic_api/joaodias_generic.Integrations/Email/EmailCredentials.json

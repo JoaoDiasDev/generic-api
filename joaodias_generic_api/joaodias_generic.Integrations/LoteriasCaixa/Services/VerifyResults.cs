@@ -24,7 +24,7 @@ namespace joaodias_generic.Integrations.LoteriasCaixa.Services
             }
             else
             {
-                return DefaultLotoFacilGames.VerifyDefaultLotoFacilGames(results.dezenas);
+                return DefaultLotoFacilGames.VerifyDefaultLotoFacilGames(results.dezenas, results.Concurso);
             }
         }
 

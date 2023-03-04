@@ -15,7 +15,7 @@ namespace joaodias_generic.Integrations.LoteriasCaixa.Services
         public static readonly LotoFacilGame lotoFacilGame8 = new(01, 02, 04, 05, 10, 11, 12, 15, 17, 19, 20, 21, 23, 24, 25, new List<int>(), "Game8");
         public static readonly LotoFacilGame lotoFacilGame9 = new(01, 03, 04, 06, 09, 10, 12, 15, 16, 17, 18, 20, 22, 24, 25, new List<int>(), "Game9");
 
-        public static string VerifyDefaultLotoFacilGames(List<int> numeros)
+        public static string VerifyDefaultLotoFacilGames(List<int> numeros, string concourse)
         {
             int matches = 0;
             List<LotoFacilGame> winnerBets = new();
@@ -42,7 +42,7 @@ namespace joaodias_generic.Integrations.LoteriasCaixa.Services
                 return "No winner Bet! :(";
 
             }
-            var winnersAnnounce = $"You had {winnerBets.Count} winner bets. Congrats!!!\n";
+            var winnersAnnounce = $"You had {winnerBets.Count} winner bets on concourse {concourse}. Congrats!!!\n";
             foreach (var game in winnerBets)
             {
                 winnersAnnounce += $"Winner Bet: {game.Name} with {game.Matches} correct numbers\n";
