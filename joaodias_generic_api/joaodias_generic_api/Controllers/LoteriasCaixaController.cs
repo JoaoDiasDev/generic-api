@@ -44,7 +44,7 @@ namespace joaodias_generic.Api.Controllers
         [Authorize]
         [ApiExplorerSettings(IgnoreApi = true)]
         [HttpPost("LotoFacil/SendEmailWithResults")]
-        public async Task<IActionResult> SendEmailWithResults([FromQuery] string destEmail)
+        public async Task<IActionResult> SendEmailWithResults([FromQuery] string senderEmail, string password, string destEmail)
         {
             var result = new VerifyResults().CheckWinnerGame();
             if (string.IsNullOrEmpty(result))
@@ -54,7 +54,7 @@ namespace joaodias_generic.Api.Controllers
 
             try
             {
-                new EmailIntegration().SendEmail(destEmail, result);
+                EmailIntegration.SendEmail(senderEmail, password, destEmail, result);
                 return Ok($"Sent email successfully: {result}");
             }
             catch (Exception)
