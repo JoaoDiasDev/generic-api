@@ -6,7 +6,7 @@ namespace joaodias_generic.Integrations.LoteriasCaixa.Services
     {
         public LotoFacilResult GetResults()
         {
-            var result = new LotoFacilParseResult().ProcessLatestLotoFacilResult();
+            var result = new LotoFacilParseResult().ProcessLatestLotoFacilResultScraping();
             if (result == null)
             {
                 return new LotoFacilResult();
@@ -18,7 +18,7 @@ namespace joaodias_generic.Integrations.LoteriasCaixa.Services
         {
             var results = GetResults();
 
-            if (results?.Numeros?.Count <= 0 || results == null)
+            if (results?.dezenas?.Count <= 0 || results == null)
             {
                 return "Error on api requests. No Results, try again later";
             }

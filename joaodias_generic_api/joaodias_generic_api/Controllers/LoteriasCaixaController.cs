@@ -13,7 +13,7 @@ namespace joaodias_generic.Api.Controllers
         [HttpGet("LotoFacil/LatestResults")]
         public async Task<IActionResult> LatestResults()
         {
-            var result = new LotoFacilParseResult().ProcessLatestLotoFacilResult();
+            var result = new LotoFacilParseResult().ProcessLatestLotoFacilResultScraping();
             if (result == null)
             {
                 return BadRequest("Can't return the results, probably a problem with the API.");

@@ -1,4 +1,6 @@
-﻿using joaodias_generic.Integrations.LoteriasCaixa.DTO;
+﻿using System.Net;
+using HtmlAgilityPack;
+using joaodias_generic.Integrations.LoteriasCaixa.DTO;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -14,7 +16,7 @@ namespace joaodias_generic.Integrations.LoteriasCaixa.Services
             _client = new RestClient(LotofacilEndpoint);
         }
 
-        public LotoFacilResult ProcessLatestLotoFacilResult()
+        public LotoFacilResult ProcessLatestLotoFacilResultApi()
         {
             RestRequest request = new(resource: "lotofacil/latest");
             var response = _client.Get(request);
@@ -32,15 +34,61 @@ namespace joaodias_generic.Integrations.LoteriasCaixa.Services
 
         }
 
-        //private string GetQueryString(Dictionary<string, string> parameters)
-        //{
-        //    var keyValuePairs = new List<string>();
-        //    foreach (var kvp in parameters)
-        //    {
-        //        keyValuePairs.Add($"{kvp.Key}={kvp.Value}");
-        //    }
+        public LotoFacilResult ProcessLatestLotoFacilResultScraping()
+        {
+            return GetLatestResultsScraping();
+        }
 
-        //    return string.Join("&", keyValuePairs);
-        //}
+        private LotoFacilResult GetLatestResultsScraping()
+        {
+            var result = new LotoFacilResult();
+            var client = new WebClient();
+            var html = client.DownloadString("https://www.sorteonline.com.br/lotofacil/resultados");
+
+            var doc = new HtmlDocument();
+            doc.LoadHtml(html);
+
+            var resultNumbers = new List<int>();
+            var ul = doc.DocumentNode.SelectNodes("//div[@class='card lot-lotofacil']//ul");
+
+            foreach (var ulNode in ul)
+            {
+                foreach (var li in ulNode.SelectNodes("./li"))
+                {
+                    if (li.Attributes["class"]?.Value.Contains("bg") == true)
+                    {
+                        var number = int.Parse(li.InnerText.Trim());
+                        resultNumbers.Add(number);
+                    }
+                }
+            }
+            result.Concurso = GetLatestConcourseNumber();
+            result.dezenas = resultNumbers;
+            return result;
+        }
+
+        private string GetLatestConcourseNumber()
+        {
+            string url = "https://www.sorteonline.com.br/lotofacil/resultados";
+            var web = new HtmlWeb();
+
+            // Load the HTML content from the URL
+            var doc = web.Load("https://www.sorteonline.com.br/lotofacil/resultados");
+
+            // Find the input element with the name attribute set to "numeroConcurso"
+            var input = doc.DocumentNode.SelectSingleNode("//input[@name='numeroConcurso']");
+
+            // Get the value of the input element
+            var numeroConcurso = input.Attributes["value"].Value;
+
+            if (numeroConcurso != null)
+            {
+                return numeroConcurso;
+            }
+            else
+            {
+                return "Could not find numeroConcurso";
+            }
+        }
     }
 }
