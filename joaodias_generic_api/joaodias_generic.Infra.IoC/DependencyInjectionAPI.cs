@@ -1,4 +1,5 @@
-﻿using joaodias_generic.Application.Interfaces;
+﻿using joaodias_generic.Application.Coins.Handlers;
+using joaodias_generic.Application.Interfaces;
 using joaodias_generic.Application.Mappings;
 using joaodias_generic.Application.Services;
 using joaodias_generic.Domain.Account;
@@ -39,6 +40,7 @@ namespace joaodias_generic.Infra.IoC
 
             var myHandlers = AppDomain.CurrentDomain.Load("joaodias_generic.Application");
             services.AddMediatR(myHandlers);
+            services.AddMediatR(typeof(GetCoinsQueryHandler).Assembly);
 
             return services;
         }

@@ -13,35 +13,17 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-//builder.Services.AddCors(builder =>
-//{
-//    builder.AddPolicy("Policy", policy =>
-//    {
-//        policy.WithOrigins("http://localhost:61960",
-//            "https://localhost:61960",
-//            "https://joaodiasdev.github.io",
-//            "https://joaodiasdev.github.io",
-//            "http://localhost",
-//            "https://localhost",
-//            "https://localhost:5556",
-//            "http://localhost:5555",
-//            "http://localhost:7251",
-//            "https://localhost:7251")
-//            .SetIsOriginAllowedToAllowWildcardSubdomains()
-//            .AllowAnyHeader()
-//            .AllowCredentials()
-//            .WithMethods("GET", "PUT", "POST", "DELETE", "OPTIONS")
-//            .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
-//    });
-//});
-
 builder.WebHost.UseUrls("http://localhost:5555", "https://localhost:5556");
 
 var connectionString = builder.Configuration.GetConnectionString("GenericApiDbConnection");
 
 builder.Services.AddDbContext<GenericApiDbContext>(options =>
 {
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), mysqlOptions =>
+    {
+        mysqlOptions.EnableRetryOnFailure();
+        mysqlOptions.CommandTimeout(45);
+    });
 });
 
 var app = builder.Build();
@@ -61,25 +43,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 
-//app.UseCors(builder =>
-//{
-//    builder.WithOrigins("http://localhost:61960",
-//       "https://localhost:61960",
-//       "https://joaodiasdev.github.io",
-//       "https://joaodiasdev.github.io",
-//       "https://localhost:5556",
-//       "http://localhost:5555",
-//       "http://localhost:7251",
-//       "https://localhost:7251")
-//       .SetIsOriginAllowedToAllowWildcardSubdomains()
-//       .AllowAnyHeader()
-//       .AllowCredentials()
-//       .WithMethods("GET", "PUT", "POST", "DELETE", "OPTIONS")
-//       .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
-//}
-//);
-
-//app.UseCors();
+app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 app.UseAuthentication();
 
